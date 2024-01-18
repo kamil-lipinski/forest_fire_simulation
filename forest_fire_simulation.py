@@ -6,21 +6,20 @@ from matplotlib.colors import ListedColormap
 from matplotlib.animation import FuncAnimation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
-# Stany:
-# 1 - drzewo
-# 2 - plonace drzewo
-# 3 - spalone drzewo
-# 4 - woda
+# States:
+# 1 - tree
+# 2 - burning tree
+# 3 - burned tree
+# 4 - water
 
-# Zasady ewolucji:
-# - drzewo staje sie plonacym drzewem z prawdopodobienstwem p, jesli ma w sasiedztwie plonace drzewo
-# - plonace drzewo w nastepnej generacji staje sie spalonym drzewem
-# - spalone drzewo odnawia sie po k iteracjach
-# - samozaplon drzewa nastepuje z prawdopodobienstwem ps (odpowiednio male)
-# - uwzglednic wode, która stanowi bariere dla ognia
-# - uwzglednic wiatr zmieniajacy prawdopodobienstwa rozprzestrzeniania sie pozaru w róznych kierunkach,
-#   kierunek powinien zmieniac sie co kilka iteracji
-
+# Evolution rules:
+# - A tree becomes a burning tree with probability p if it has a burning tree in its neighborhood
+# - A burning tree becomes a burned tree in the next generation
+# - A burned tree regenerates after k iterations
+# - Tree self-ignition occurs with probability ps (relatively low)
+# - Consider water, which acts as a barrier to fire
+# - Consider wind changing the probabilities of fire spread in different directions,
+#   the direction should change every few iterations
 
 class ForestFireSimulation:
     def __init__(self, forest_size, water, tree_ignition_probability, tree_self_ignition_probability,
@@ -230,13 +229,13 @@ class ForestFireSimulation:
 
             if frame == 0:
                 ax.imshow(self.forest, cmap=custom_cmap, vmin=0, vmax=4, interpolation='nearest')
-                ax.set_title(f'Początkowy stan lasu\nWiatr: {wind_labels[self.wind_direction]}\n', fontweight='bold', color='#111111')
+                ax.set_title(f'Initial forest state\nWind: {wind_labels[self.wind_direction]}\n', fontweight='bold', color='#111111')
             elif frame == 1:
                 self.start_the_fire()
                 ax.clear()
                 plt.axis('off')
                 ax.imshow(self.forest, cmap=custom_cmap, vmin=0, vmax=4, interpolation='nearest')
-                ax.set_title(f'Rozpoczęcie pożaru\nWiatr: {wind_labels[self.wind_direction]}\n', fontweight='bold', color='#111111')
+                ax.set_title(f'Start of the fire\nWind: {wind_labels[self.wind_direction]}\n', fontweight='bold', color='#111111')
             else:
                 if self.wind_duration == self.wind_direction_change_period:
                     self.change_wind_direction()
@@ -251,7 +250,7 @@ class ForestFireSimulation:
                 plt.axis('off')
                 ax.imshow(self.forest, cmap=custom_cmap, vmin=0, vmax=4, interpolation='nearest')
 
-                ax.set_title(f'Generacja: {frame - 1}\nWiatr: {wind_labels[self.wind_direction]}\n', fontweight='bold', color='#111111')
+                ax.set_title(f'Generation: {frame - 1}\nWind: {wind_labels[self.wind_direction]}\n', fontweight='bold', color='#111111')
 
                 ax.set_xlim(xlim)
                 ax.set_ylim(ylim)
@@ -271,7 +270,7 @@ class GUI(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title("Pożar lasu")
+        self.title("Forest Fire Simulation")
 
         self.animation = None
 
@@ -289,7 +288,7 @@ class GUI(tk.Tk):
 
         self.start_button = tk.Button(
             self,
-            text='Rozpocznij symulację',
+            text='Start the simulation',
             command=self.start_simulation,
             wraplength=70,
             font=self.font_tuple,
@@ -298,7 +297,7 @@ class GUI(tk.Tk):
 
         self.stop_button = tk.Button(
             self,
-            text='Przerwij symulację',
+            text='Stop the simulation',
             command=self.stop_simulation,
             wraplength=70,
             font=self.font_tuple,
@@ -310,7 +309,7 @@ class GUI(tk.Tk):
         self.fig, self.ax = plt.subplots(figsize=(7, 7))
         self.fig.set_facecolor('#f0f0f0')
         self.ax.axis('off')
-        self.ax.set_title('Pożar lasu\n', fontweight='bold', color='#111111')
+        self.ax.set_title('Forest Fire Simulation\n', fontweight='bold', color='#111111')
         self.ax.imshow(np.ones((10, 10)), cmap='gray', vmin=0, vmax=1)
         self.canvas = FigureCanvasTkAgg(self.fig, master=self)
         self.canvas_widget = self.canvas.get_tk_widget()
@@ -327,48 +326,48 @@ class GUI(tk.Tk):
 
         label_wrap_length = 100
 
-        tk.Label(self, text='Rozmiar lasu', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Forest size', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=6, column=2, sticky='nsew', padx=5, pady=0)
         tk.Scale(self, from_=50, to=1000, orient='horizontal', variable=self.forest_size_var).grid(
             row=6, column=3, padx=(5, 30), pady=0, sticky='nsew')
 
-        tk.Label(self, text='Woda', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Water', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=7, column=2, sticky='nsew', padx=5, pady=0)
         tk.Checkbutton(self, variable=self.water_var).grid(
             row=7, column=3, padx=(5, 30), pady=0, sticky='nsew')
-
-        tk.Label(self, text='P-stwo zapłonu drzewa', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+                            
+        tk.Label(self, text='Tree ignation probability', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=8, column=2, sticky='nsew', padx=5, pady=0)
         tk.Scale(self, from_=0, to=1, resolution=0.01, orient='horizontal', variable=self.tree_ignition_prob_var).grid(
             row=8, column=3, padx=(5, 30), pady=0, sticky='nsew')
 
-        tk.Label(self, text='P-stwo samozapłonu drzewa', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Tree self ignation probability', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=9, column=2, sticky='nsew', padx=5, pady=0)
         tk.Scale(self, from_=0, to=0.1, resolution=0.0001, orient='horizontal', variable=self.tree_self_ignition_prob_var).grid(
             row=9, column=3, padx=(5, 30), pady=0, sticky='nsew')
 
-        tk.Label(self, text=f'Okres regeneracji spalonego drzewa [iter]\n(0 = OFF)', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text=f'Burned tree regeneration period [iter]\n(0 = OFF)', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=10, column=2, sticky='nsew', padx=5, pady=0)
         tk.Entry(self, textvariable=self.burned_tree_reg_period_var, validate='all', validatecommand=vcmd_numeric).grid(
             row=10, column=3, padx=(5, 30), pady=0, sticky='ew')
 
-        tk.Label(self, text='Okres zmiany kierunku wiatru [iter]', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Wind direction change period [iter]', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=11, column=2, sticky='nsew', padx=5, pady=0)
         tk.Entry(self, textvariable=self.wind_dir_change_period_var, validate='all', validatecommand=vcmd_numeric).grid(
             row=11, column=3, padx=(5, 30), pady=0, sticky='ew')
 
-        tk.Label(self, text='Siła wiatru', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Wind strength', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=12, column=2, sticky='nsew', padx=5, pady=0)
         tk.Scale(self, from_=0, to=1, resolution=0.01, orient='horizontal', variable=self.wind_strength_var).grid(
             row=12, column=3, padx=(5, 30), pady=0, sticky='nsew')
 
-        tk.Label(self, text='Typ sąsiedztwa', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Neighborhood type', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=13, column=2, sticky='nsew', padx=5, pady=0)
         neighborhood_options = ['Moore', 'Von Neumann']
         tk.OptionMenu(self, self.neighborhood_type_var, *neighborhood_options).grid(
             row=13, column=3, padx=(5, 30), pady=0, sticky='ew')
 
-        tk.Label(self, text='Długość wyświetlania klatki [ms]', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
+        tk.Label(self, text='Simulation speed [ms]', wraplength=label_wrap_length, font=self.font_tuple, fg='#111111').grid(
             row=14, column=2, sticky='nsew', padx=5, pady=0)
         tk.Entry(self, textvariable=self.simulation_speed_var, validate='all', validatecommand=vcmd_numeric).grid(
             row=14, column=3, padx=(5, 30), pady=0, sticky='ew')
