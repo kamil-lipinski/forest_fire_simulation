@@ -1,6 +1,8 @@
-Video ⬇️⬇️⬇️
+![image](https://github.com/kamil-lipinski/forest_fire_simulation/assets/59886846/7fba228a-49a6-48b4-b809-35050a0928d8)
+![image](https://github.com/kamil-lipinski/forest_fire_simulation/assets/59886846/f7ac23bd-897f-4aa5-892a-ce140756318a)
+![image](https://github.com/kamil-lipinski/forest_fire_simulation/assets/59886846/e3e15348-b0d7-4b47-b637-c578af403f03)
+![image](https://github.com/kamil-lipinski/forest_fire_simulation/assets/59886846/2ea1240c-1792-410b-9fee-13be3465dcf3)
 
-[![Pożar lasu](https://img.youtube.com/vi/nsmnCwWA4ng/0.jpg)](https://www.youtube.com/watch?v=nsmnCwWA4ng)
 
 Automat komórkowy - pożar lasu
 
