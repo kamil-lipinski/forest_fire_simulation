@@ -1,5 +1,4 @@
-[![Watch the video](https://raw.githubusercontent.com/kamil-lipinski/forest_fire_simulation/main/video.mp4)](https://raw.githubusercontent.com/kamil-lipinski/forest_fire_simulation/main/video.mp4)
-
+[![Pożar lasu](https://img.youtube.com/vi/nsmnCwWA4ng/0.jpg)](https://www.youtube.com/watch?v=nsmnCwWA4ng)
 
 Automat komurkowy - pożar lasu
 
