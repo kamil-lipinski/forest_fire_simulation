@@ -2,8 +2,6 @@ Video ⬇️⬇️⬇️
 
 [![Pożar lasu](https://img.youtube.com/vi/nsmnCwWA4ng/0.jpg)](https://www.youtube.com/watch?v=nsmnCwWA4ng)
 
-numpy==1.26.2; matplotlib==3.8.2
-
 Automat komórkowy - pożar lasu
 
 Stany:
@@ -37,3 +35,8 @@ Evolution rules:
 - tree self-ignition occurs with probability ps (relatively low)
 - consider water, which acts as a barrier to fire
 - consider wind changing the probabilities of fire spread in different directions, the direction should change every few iterations
+
+requirements:
+- python 3.11
+- numpy 1.26.2
+- matplotlib 3.8.2
