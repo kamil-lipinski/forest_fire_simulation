@@ -1,3 +1,4 @@
+Prezentacja działania ⬇️⬇️⬇️
 [![Pożar lasu](https://img.youtube.com/vi/nsmnCwWA4ng/0.jpg)](https://www.youtube.com/watch?v=nsmnCwWA4ng)
 
 Automat komórkowy - pożar lasu
