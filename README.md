@@ -8,7 +8,7 @@ Stany:
 3 - spalone drzewo;
 4 - woda;
 
-Evolution rules:
+Zasady ewolucji:
 - drzewo staje się płonącym drzewem z prawdopodobieństwem p, jeśli ma w sąsiedztwie płonące drzewo
 - płonące drzewo w następnej generacji staje się spalonym drzewem
 - spalone drzewo odnawia się po k iteracjach
