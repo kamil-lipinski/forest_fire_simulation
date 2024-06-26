@@ -2,6 +2,8 @@ Video ⬇️⬇️⬇️
 
 [![Pożar lasu](https://img.youtube.com/vi/nsmnCwWA4ng/0.jpg)](https://www.youtube.com/watch?v=nsmnCwWA4ng)
 
+numpy==1.26.2; matplotlib==3.8.2
+
 Automat komórkowy - pożar lasu
 
 Stany:
