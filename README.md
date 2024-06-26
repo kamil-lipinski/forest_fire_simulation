@@ -1,6 +1,6 @@
 [![Pożar lasu](https://img.youtube.com/vi/nsmnCwWA4ng/0.jpg)](https://www.youtube.com/watch?v=nsmnCwWA4ng)
 
-Automat komurkowy - pożar lasu
+Automat komórkowy - pożar lasu
 
 Stany:
 1 - drzewo;
@@ -18,7 +18,7 @@ Zasady ewolucji:
 
 ===========================================================================
 
-Forest fire cellular automaton
+Cellular automaton - forest fire
 
 States:
 1 - tree;
